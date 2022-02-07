@@ -1,3 +1,8 @@
+import TimeAgo from 'javascript-time-ago'
+import en from 'javascript-time-ago/locale/en.json'
+
+TimeAgo.addDefaultLocale(en)
+
 type User = {
     id: number,
     name: string,
@@ -23,6 +28,9 @@ type PostCardComponentProps = {
 }
 
 const PostCardComponent = ({ user, post, buttonText, onClick, isBelonged }: PostCardComponentProps) => {
+
+    const timeAgo = new TimeAgo('en-US')
+
     return (
         <div className="bg-white px-[16px] py-[16px] rounded-xl shadow-sm">
             <div className="flex gap-[8px] items-center">
@@ -32,7 +40,7 @@ const PostCardComponent = ({ user, post, buttonText, onClick, isBelonged }: Post
                 <div className="grid grid-rows-2">
                     <h5 className="font-medium text-[14px]">{user.name}</h5>
                     <div className="flex items-center gap-[6px] text-[12px] text-gray-400">
-                        <span>{post.posted_at}</span>
+                        <span>{timeAgo.format(new Date(post.posted_at))}</span>
                         <span>|</span>
                         <span>{post.isPrivate ? 'Private' : 'Public'}</span>
                     </div>
