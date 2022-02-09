@@ -336,7 +336,7 @@ const QuestionsPage = () => {
                 onExit={() => !isModalQuestionTextOpen}>
                 <div className="fixed top-0 max-w-md w-full h-full z-20 flex justify-center overflow-auto max-h-full bg-blue-700 bg-opacity-90">
                     <div
-                        ref={modalQuestionTextRef} 
+                        ref={modalQuestionTextRef}
                         className="bg-white py-[24px] px-[16px] z-30 w-full h-fit my-[64px] mx-[16px] rounded-xl shadow">
                         <div className="pb-[16px]">
                             <h4 className="font-medium text-[22px]">Create Question</h4>

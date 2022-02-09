@@ -6,6 +6,7 @@ import storage from 'redux-persist/lib/storage';
 
 import UserReducer from './UserReducer';
 import PostReducer from './PostReducer';
+import GlobalReducer from './GlobalReducer';
 
 // Configure persist-reducer
 const configPersist = {
@@ -20,7 +21,8 @@ const configPersist = {
 const combinedReducers = combineReducers({
     // Add your reducers here
     'UserReducer': UserReducer,
-    'PostReducer': PostReducer
+    'PostReducer': PostReducer,
+    'GlobalReducer': GlobalReducer,
 });
 
 export default persistReducer(configPersist, combinedReducers)

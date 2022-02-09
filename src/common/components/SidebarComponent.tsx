@@ -1,4 +1,4 @@
-import { useDispatch } from "react-redux"
+import { useDispatch, useSelector } from "react-redux"
 import { NavLink, useNavigate } from "react-router-dom"
 import { logout } from "../../api/services/AuthService"
 
@@ -10,6 +10,8 @@ const SidebarComponent = ({ onClose }: SidebarComponentProps) => {
 
     const navigate = useNavigate()
     const dispatch = useDispatch()
+
+    const user = useSelector((state: any) => state.UserReducer.user)
 
     const handleLogout = async () => {
         logout({ id: '' }).then((res: any) => {
@@ -93,13 +95,13 @@ const SidebarComponent = ({ onClose }: SidebarComponentProps) => {
                     <h1 className="font-medium text-[18px]">Anojudge</h1>
                 </div>
 
-                <div className="bg-gray-50 px-[16px] py-[12px] mt-[24px] rounded-xl flex gap-[12px]">
+                <div className="bg-gray-50 px-[16px] py-[12px] mt-[24px] rounded-xl grid grid-cols-4 gap-3">
                     <div className="bg-white aspect-square w-[42px] h-[42px] border border-gray-100 rounded-full text-[18px] flex items-center justify-center">
                         😊
                     </div>
-                    <div>
-                        <h6 className="font-medium">Adinda Samitra</h6>
-                        <p className="text-[14px] text-gray-500">@adindasamitra</p>
+                    <div className="col-span-3">
+                        <h6 className="overflow-hidden text-ellipsis whitespace-nowrap font-medium">{ user.user?.name || 'You' }</h6>
+                        <p className="overflow-hidden text-ellipsis text-[14px] text-gray-500">{ user.user?.email || '@anonymous' }</p>
                     </div>
                 </div>
 
@@ -121,18 +123,21 @@ const SidebarComponent = ({ onClose }: SidebarComponentProps) => {
                                     </div>
                                 </NavLink>
                             ))}
-                            <div
-                                onClick={() => handleLogout()}
-                                className={`flex items-center gap-[16px] py-[16px] px-[24px] rounded-lg cursor-pointer`}>
-                                <div>
-                                    <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1" />
-                                    </svg>
+
+                            { menu.label === 'Features' && (
+                                <div
+                                    onClick={() => handleLogout()}
+                                    className={`flex items-center gap-[16px] py-[16px] px-[24px] rounded-lg cursor-pointer`}>
+                                    <div>
+                                        <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1" />
+                                        </svg>
+                                    </div>
+                                    <div>
+                                        Logout
+                                    </div>
                                 </div>
-                                <div>
-                                    Logout
-                                </div>
-                            </div>
+                            ) }
                         </div>
                     </div>
                 ))}

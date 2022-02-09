@@ -1,4 +1,5 @@
 import { useNavigate } from "react-router-dom"
+import { useDispatch, useSelector } from 'react-redux'
 
 type NavbarComponentProps = {
     onOpen?: () => void,
@@ -6,9 +7,16 @@ type NavbarComponentProps = {
 }
 
 const NavbarTopComponent = ({ onOpen, isBack }: NavbarComponentProps) => {
-    
+
+    const dispatch = useDispatch()
     const navigate = useNavigate()
-    
+
+    const user = useSelector((state: any) => state.UserReducer.user)
+
+    const handleSearchToggle = () => {
+        dispatch({ type: 'TOGGLE_SEARCH' })
+    }
+
     return (
         <header>
             <nav className="flex justify-between px-[20px] py-[18px] items-center">
@@ -31,7 +39,9 @@ const NavbarTopComponent = ({ onOpen, isBack }: NavbarComponentProps) => {
                 )}
                 <div className="flex items-center gap-[16px]">
                     <div className="grid grid-cols-2 gap-[12px] border-r border-gray-300 pr-[16px] relative">
-                        <button className="px-[8px] py-[8px] aspect-square bg-white rounded-full flex items-center justify-center text-gray-300">
+                        <button
+                            onClick={handleSearchToggle}
+                            className="px-[8px] py-[8px] aspect-square bg-white rounded-full flex items-center justify-center text-gray-300">
                             <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="3" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
                             </svg>
@@ -45,9 +55,16 @@ const NavbarTopComponent = ({ onOpen, isBack }: NavbarComponentProps) => {
                             </span>
                         </button>
                     </div>
-                    <button className="bg-blue-600 p-[8px] aspect-square rounded-full flex items-center justify-center font-medium text-white w-[48px] h-[48px]">
-                        A
-                    </button>
+                    {user.user?.avatar ? (
+                        <img
+                            className="bg-gray-200 aspect-square rounded-full w-[44px] h-[44px]"
+                            src={user.user?.avatar}
+                            alt="" />
+                    ) : (
+                        <button className="bg-blue-600 p-[8px] aspect-square rounded-full flex items-center justify-center font-medium text-white w-[44px] h-[44px]">
+                            {user.user?.name.substr(0, 1) || 'A'}
+                        </button>
+                    )}
                 </div>
             </nav>
         </header>

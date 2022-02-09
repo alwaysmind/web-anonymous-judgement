@@ -1,5 +1,6 @@
 const INITIAL_STATE = {
-    user: {}
+    user: {},
+    friends: []
 }
 
 const UserReducer = (state = INITIAL_STATE, action: { type: string, payload: any }) => {
@@ -8,6 +9,12 @@ const UserReducer = (state = INITIAL_STATE, action: { type: string, payload: any
             return {
                 ...state,
                 user: action.payload
+            }
+        }
+        case "SET_FRIENDS": {
+            return {
+                ...state,
+                friends: action.payload
             }
         }
         default: {
