@@ -6,8 +6,8 @@ type AuthContainerProps = {
 
 const AuthContainer = ({ children }: AuthContainerProps) => {
     return (
-        <div className="max-w-md mx-auto">
-            {children}
+        <div className="h-full bg-white min-h-[100vh] max-h-[100vh] overflow-y-auto overflow-x-hidden max-w-md mx-auto relative">
+                {children}
         </div>
     )
 }

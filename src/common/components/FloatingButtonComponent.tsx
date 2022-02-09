@@ -9,7 +9,7 @@ const FloatingButtonComponent = ({ icon, onClick }: FloatingButtonComponentProps
     return (
         <button
             onClick={onClick}
-            className="sticky bg-white aspect-square rounded-full p-[24px] text-blue-600 bottom-[105px] left-[78%] shadow-sm border border-gray-200">
+            className="sticky bg-white aspect-square rounded-full p-[24px] text-blue-600 bottom-[105px] left-[80%] shadow-xl border border-gray-200">
             {icon}
         </button>
     )

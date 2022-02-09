@@ -4,10 +4,10 @@ import en from 'javascript-time-ago/locale/en.json'
 TimeAgo.addDefaultLocale(en)
 
 type User = {
-    id: number,
-    name: string,
-    email: string,
-    avatar: string,
+    id?: number,
+    name?: string,
+    email?: string,
+    imageUrl?: string,
 }
 
 type Post = {
@@ -34,11 +34,11 @@ const PostCardComponent = ({ user, post, buttonText, onClick, isBelonged }: Post
     return (
         <div className="bg-white px-[16px] py-[16px] rounded-xl shadow-sm">
             <div className="flex gap-[8px] items-center">
-                <div>
-                    <img src="https://images.unsplash.com/photo-1584997159889-8bb96d0a2217?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=580&q=80" className="aspect-square overflow-hidden w-[45px] rounded-full" alt="" />
+                <div className='flex items-center justify-center'>
+                    <img src={user.imageUrl || "https://upload.wikimedia.org/wikipedia/commons/7/7c/Profile_avatar_placeholder_large.png"} className="aspect-square overflow-hidden w-[45px] rounded-full" alt="" />
                 </div>
                 <div className="grid grid-rows-2">
-                    <h5 className="font-medium text-[14px]">{user.name}</h5>
+                    <h5 className="font-medium text-[14px]">{user.name || "You"}</h5>
                     <div className="flex items-center gap-[6px] text-[12px] text-gray-400">
                         <span>{timeAgo.format(new Date(post.posted_at))}</span>
                         <span>|</span>

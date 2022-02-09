@@ -1,10 +1,11 @@
 import { createStore } from '@reduxjs/toolkit';
+import { persistStore } from 'redux-persist';
 
 import reducers from './reducers';
 
-const store = createStore(
+export const store = createStore(
     reducers,
     (window as any).__REDUX_DEVTOOLS_EXTENSION__ && (window as any).__REDUX_DEVTOOLS_EXTENSION__()
 );
 
-export default store
+export const persistor = persistStore(store)

@@ -1,23 +1,27 @@
+import { useEffect } from "react"
+import { useDispatch, useSelector } from "react-redux"
+import { getAllPostFriend } from "../api/services/PostService"
 import PostCardComponent from "../common/components/PostCardComponent"
 import MainContainer from "../common/containers/MainContainer"
 
 const HomePage = () => {
 
-    const posts = [
-        {
-            id: 1,
-            content: "Hi, I am a beginner here, looking for friends who would like to judge me all the way till I understand myself. Someone willing to help me? 🙂",
-            count_responses: 0,
-            posted_at: "2020-01-01T00:00:00.000Z",
-            isPrivate: false,
-            user: {
-                id: 1,
-                name: "John Doe",
-                email: "john@due.com",
-                avatar: "https://via.placeholder.com/150"
-            }
-        },
-    ]
+    const dispatch = useDispatch()
+    const user = useSelector((state: any) => state.UserReducer.user)
+
+    useEffect(() => {
+        if (user.user) {
+            getAllPostFriend(user.user._id).then((res: any) => {
+                dispatch({
+                    type: "SET_FRIEND_POSTS",
+                    payload: res.data
+                })
+            })
+        }
+
+    }, []) // eslint-disable-line
+
+    const posts: any = []
 
     return (
         <MainContainer className="bg-gray-50 h-full">
@@ -26,14 +30,26 @@ const HomePage = () => {
                 <p className="text-[14px] text-gray-600">Help your friends with giving your best response to their latest post.</p>
             </div>
 
-            <div className="grid grid-cols-1 gap-[16px] mt-[24px]">
-                {posts.map(post => (
-                    <PostCardComponent
-                        key={post.id}
-                        post={post}
-                        user={post.user} />
-                ))}
-            </div>
+            {posts.length > 0 ? (
+                <div className="grid grid-cols-1 gap-[16px] mt-[24px]">
+                    {posts.map((post: any) => (
+                        <PostCardComponent
+                            key={post.id}
+                            post={post}
+                            user={post.user} />
+                    ))}
+                </div>
+            ) : (
+                <div className="text-center mt-[64px] opacity-75">
+                    <div className="text-green-600">
+                        <svg xmlns="http://www.w3.org/2000/svg" className="mx-auto h-[20%] w-[20%]" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
+                        </svg>
+                    </div>
+                    <p className="text-center text-gray-600 text-[18px] mt-[8px]">All caught up</p>
+                </div>
+            )}
+
 
         </MainContainer>
     )

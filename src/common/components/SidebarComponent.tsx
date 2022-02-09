@@ -1,10 +1,30 @@
-import { NavLink } from "react-router-dom"
+import { useDispatch } from "react-redux"
+import { NavLink, useNavigate } from "react-router-dom"
+import { logout } from "../../api/services/AuthService"
 
 type SidebarComponentProps = {
     onClose: () => void,
 }
 
 const SidebarComponent = ({ onClose }: SidebarComponentProps) => {
+
+    const navigate = useNavigate()
+    const dispatch = useDispatch()
+
+    const handleLogout = async () => {
+        logout({ id: '' }).then((res: any) => {
+            dispatch({
+                type: "SET_USER",
+                payload: {}
+            })
+    
+            setTimeout(() => {
+                navigate('/login')
+            }, 300)
+        }).catch(err => {
+            console.log(err)
+        })
+    }
 
     const menus = [
         {
@@ -67,7 +87,7 @@ const SidebarComponent = ({ onClose }: SidebarComponentProps) => {
                 <div className="flex items-center gap-[16px]">
                     <div className="bg-blue-700 text-white aspect-square w-[42px] flex items-center justify-center rounded-md">
                         <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6" viewBox="0 0 20 20" fill="currentColor">
-                            <path fill-rule="evenodd" d="M2.94 6.412A2 2 0 002 8.108V16a2 2 0 002 2h12a2 2 0 002-2V8.108a2 2 0 00-.94-1.696l-6-3.75a2 2 0 00-2.12 0l-6 3.75zm2.615 2.423a1 1 0 10-1.11 1.664l5 3.333a1 1 0 001.11 0l5-3.333a1 1 0 00-1.11-1.664L10 11.798 5.555 8.835z" clip-rule="evenodd" />
+                            <path fillRule="evenodd" d="M2.94 6.412A2 2 0 002 8.108V16a2 2 0 002 2h12a2 2 0 002-2V8.108a2 2 0 00-.94-1.696l-6-3.75a2 2 0 00-2.12 0l-6 3.75zm2.615 2.423a1 1 0 10-1.11 1.664l5 3.333a1 1 0 001.11 0l5-3.333a1 1 0 00-1.11-1.664L10 11.798 5.555 8.835z" clipRule="evenodd" />
                         </svg>
                     </div>
                     <h1 className="font-medium text-[18px]">Anojudge</h1>
@@ -101,6 +121,18 @@ const SidebarComponent = ({ onClose }: SidebarComponentProps) => {
                                     </div>
                                 </NavLink>
                             ))}
+                            <div
+                                onClick={() => handleLogout()}
+                                className={`flex items-center gap-[16px] py-[16px] px-[24px] rounded-lg cursor-pointer`}>
+                                <div>
+                                    <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1" />
+                                    </svg>
+                                </div>
+                                <div>
+                                    Logout
+                                </div>
+                            </div>
                         </div>
                     </div>
                 ))}

@@ -5,6 +5,7 @@ import MainContainer from "../common/containers/MainContainer"
 
 import Chart from 'react-apexcharts'
 import ProfileCardComponent from "../common/components/ProfileCardComponent"
+import { useSelector } from "react-redux"
 
 const FloatingButton = () => {
     const navigate = useNavigate()
@@ -33,10 +34,17 @@ const MyAccountPage = () => {
                 dropShadow: {
                     enabled: false,
                 }
+            },
+            plotOptions: {
+                pie: {
+                    expandOnClick: false,
+                }
             }
         },
         series: [44, 55],
     }
+
+    const user = useSelector((state: any) => state.UserReducer.user)
 
     const posts = [
         {
@@ -49,7 +57,7 @@ const MyAccountPage = () => {
                 id: 1,
                 name: "John Doe",
                 email: "john@due.com",
-                avatar: "https://via.placeholder.com/150"
+                imageUrl: "https://via.placeholder.com/150"
             }
         },
         {
@@ -62,7 +70,7 @@ const MyAccountPage = () => {
                 id: 1,
                 name: "John Doe",
                 email: "john@due.com",
-                avatar: "https://via.placeholder.com/150"
+                imageUrl: "https://via.placeholder.com/150"
             }
         },
         {
@@ -75,7 +83,7 @@ const MyAccountPage = () => {
                 id: 1,
                 name: "John Doe",
                 email: "john@due.com",
-                avatar: "https://via.placeholder.com/150"
+                imageUrl: "https://via.placeholder.com/150"
             }
         },
         {
@@ -88,7 +96,7 @@ const MyAccountPage = () => {
                 id: 1,
                 name: "John Doe",
                 email: "john@due.com",
-                avatar: "https://via.placeholder.com/150"
+                imageUrl: "https://via.placeholder.com/150"
             }
         },
         {
@@ -101,7 +109,7 @@ const MyAccountPage = () => {
                 id: 1,
                 name: "John Doe",
                 email: "john@due.com",
-                avatar: "https://via.placeholder.com/150"
+                imageUrl: "https://via.placeholder.com/150"
             }
         },
     ]
@@ -130,7 +138,7 @@ const MyAccountPage = () => {
                         <PostCardComponent
                             key={post.id}
                             post={post}
-                            user={post.user}
+                            user={user}
                             isBelonged={true} />
                     ))}
                 </div>

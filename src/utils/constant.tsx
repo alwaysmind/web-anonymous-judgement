@@ -1,0 +1,1 @@
+export const API_HOST = "https://anonymous-judgement.herokuapp.com/api/v1"
